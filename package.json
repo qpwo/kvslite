@@ -1,6 +1,6 @@
 {
   "name": "kvslite",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Synchronous key-value store",
   "main": "./kvslite.js",
   "types": "./kvslite.d.ts",
