@@ -1,6 +1,6 @@
 # kvslite
 
-Key-value store in node using `sqlite3` and v8's serialize & deserialize. Synchronous.
+Synchronous key-value store in node using `sqlite3` and v8's serialize & deserialize.
 
 ```sh
 npm i kvslite

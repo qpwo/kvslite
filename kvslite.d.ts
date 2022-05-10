@@ -1,4 +1,4 @@
-/** Key-value store in node using `sqlite3` and v8's serialize & deserialize. Synchronous. */
+/** Synchronous key-value store in node using `sqlite3` and v8's serialize & deserialize. */
 export declare class KVS<T = unknown> {
     /** Make or open a collection. One path can hold multiple collections. */
     constructor(dbpath: any, collection?: string)
