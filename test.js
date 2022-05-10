@@ -1,4 +1,4 @@
-const { strictEqual, deepStrictEqual } = require('assert')
+const { strictEqual, deepStrictEqual, ok } = require('assert')
 const { KVS } = require('./kvslite')
 
 function setAndGet() {
@@ -39,8 +39,19 @@ function grabBag() {
     deepStrictEqual(found, { foobar: 1, foobaz: 2 })
 }
 
+function setALot() {
+    const start = performance.now()
+    const db = new KVS(':memory:')
+    for (let i = 0; i < 100_000; i++) {
+        db.set(i.toString(), Math.random())
+        db.get(i.toString())
+    }
+    const end = performance.now()
+    ok(end - start < 2500)
+}
+
 function main() {
-    const tests = [setAndGet, grabBag]
+    const tests = [setAndGet, grabBag, setALot]
     for (const t of tests) {
         console.log(`\n\nstarting test ${t.name}`)
         try {
