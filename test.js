@@ -1,5 +1,5 @@
 const { strictEqual, deepStrictEqual } = require('assert')
-const { KVS } = require('./kvslite.js')
+const { KVS } = require('./kvslite')
 
 function setAndGet() {
     const db = new KVS(':memory:')
@@ -22,7 +22,8 @@ function grabBag() {
         d: 13,
     }
     db.setMany(obj)
-    deepStrictEqual(obj, db.getMany(['a', 'b', 'c', 'd']))
+    const gotten = db.getMany(['a', 'b', 'c', 'd'])
+    deepStrictEqual(obj, gotten)
     db.delete('b')
     strictEqual(db.get('b'), undefined)
     db.delete('c')
