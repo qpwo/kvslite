@@ -17,12 +17,12 @@ class KVS {
         this.dbAll = db.prepare(`SELECT * FROM ${coll}`)
         this.dbFind = db.prepare(`SELECT * FROM ${coll} WHERE key LIKE ?`)
         this.dbDelete = db.prepare(`DELETE FROM ${coll} WHERE key = ?`)
-        this.dbInsertMany = db.transaction(pairs => {
-            for (const [key, value] of pairs) this.dbInsert.run(key, value)
+
+        this.setMany = db.transaction(obj => {
+            for (const k in obj) {
+                this.dbInsert.run(k, serialize(obj[k]))
+            }
         })
-        this.dbGetMany = db.transaction(keys =>
-            keys.map(key => this.dbGet.get(key))
-        )
     }
 
     close() {
@@ -35,16 +35,25 @@ class KVS {
         return deserialize(row.value)
     }
 
+    getMany(keys) {
+        const o = {}
+        try {
+            const tx = this.db.transaction(keys => {
+                keys.forEach(key => {
+                    const res = this.dbGet.get(key)
+                    if (!res) throw null
+                    o[key] = deserialize(res.value)
+                })
+            })
+            tx(keys)
+        } catch (e) {
+            return undefined
+        }
+        return o
+    }
+
     set(key, value) {
         this.dbInsert.run(key, serialize(value))
-    }
-
-    setMany(pairs) {
-        this.dbInsertMany(pairs)
-    }
-
-    getMany(keys) {
-        return this.dbGetMany(keys)
     }
 
     delete(key) {
@@ -52,11 +61,19 @@ class KVS {
     }
 
     all() {
-        return this.dbAll.run()
+        const res = this.dbAll.all()
+        if (!res) return res
+        const o = {}
+        res.forEach(({ key, value }) => (o[key] = deserialize(value)))
+        return o
     }
 
     find(prefix) {
-        return this.dbFind.run(prefix + '%')
+        const res = this.dbFind.all(prefix + '%')
+        if (!res) return res
+        const o = {}
+        res.forEach(({ key, value }) => (o[key] = deserialize(value)))
+        return o
     }
 }
 
