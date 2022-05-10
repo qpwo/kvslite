@@ -1,0 +1,29 @@
+{
+  "name": "kvslite",
+  "version": "1.0.0",
+  "description": "Synchronous key-value store",
+  "main": "./kvslite.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qpwo/kvslite.git"
+  },
+  "keywords": [
+    "KVS",
+    "Key-Value Store",
+    "SQLite"
+  ],
+  "author": "Luke Harold Miles",
+  "bugs": {
+    "url": "https://github.com/qpwo/kvslite/issues"
+  },
+  "homepage": "https://github.com/qpwo/kvslite",
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.5.0"
+  },
+  "dependencies": {
+    "better-sqlite3": "^7.5.1"
+  }
+}
