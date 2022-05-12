@@ -1,4 +1,5 @@
 const { strictEqual, deepStrictEqual, ok } = require('assert')
+const { statSync } = require('fs')
 const { KVS } = require('./kvslite')
 
 function setAndGet() {
@@ -49,9 +50,29 @@ function setALot() {
     const end = performance.now()
     ok(end - start < 2500)
 }
+function fileLimitCheck() {
+    const start = performance.now()
+    const path = 'temp.db'
+    const db = new KVS(path)
+    const maxRecords = 100_000_000
+    const updateInterval = 100_000
+    for (let i = 0; i < maxRecords; i++) {
+        if (i % updateInterval === 0) {
+            // const sizeMb = statSync(path).size / 1024 / 1024
+            const elapsedSec = (performance.now() - start) / 1000
+            console.log({
+                i,
+                // sizeMb,
+                elapsedSec,
+            })
+        }
+        db.set(i.toString(), Math.random())
+    }
+    const end = performance.now()
+}
 
 function main() {
-    const tests = [setAndGet, grabBag, setALot]
+    const tests = [fileLimitCheck] //setAndGet, grabBag, setALot]
     for (const t of tests) {
         console.log(`\n\nstarting test ${t.name}`)
         try {

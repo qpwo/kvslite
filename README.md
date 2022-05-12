@@ -1,10 +1,15 @@
 # kvslite
 
-Synchronous key-value store in node using `sqlite3` and v8's serialize & deserialize.
+Synchronous persistent key-value store for node using `sqlite3` and v8's serialize & deserialize. No daemon!
 
 ```sh
 npm i kvslite
 ```
+
+-   ✅ Store any data including classes, sets, etc
+-   ✅ Add 100k records per second
+-   ✅ Use in memory or on drive
+-   **better-sqlite3 seems to require node version 16**
 
 ## example
 

@@ -1,12 +1,12 @@
 {
   "name": "kvslite",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Synchronous key-value store in node using sqlite3 and v8's serialization. Holds arbitrary data.",
   "main": "./kvslite.js",
   "types": "./kvslite.d.ts",
   "files": [
-    "./kvslite.js",
-    "./kvslite.d.ts",
+    "kvslite.js",
+    "kvslite.d.ts",
     "README.md",
     "package.json"
   ],
